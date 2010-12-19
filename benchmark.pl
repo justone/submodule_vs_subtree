@@ -7,22 +7,34 @@ use Time::HiRes qw(gettimeofday tv_interval);
 use File::Path;
 use Cwd;
 
-my $cwd = getcwd;
+print "type,count,time\n";
 
-my $t0 = [gettimeofday];
+my $cwd  = getcwd;
+my $base = "file://$cwd/repos";
 
-rmtree('2_plugins');
-`git clone --recursive file://$cwd/repos/submodule/2_plugins`;
+foreach my $count ( 2, 4, 6, 8, 10 ) {
+    clone_test( 'submodule', $count, 10 );
+    clone_test( 'subtree',   $count, 10 );
+}
 
-my $elapsed = tv_interval($t0);
+sub clone_test {
+    my ( $type, $count, $runs ) = @_;
 
-printf "%.03f\n", $elapsed;
+    $runs ||= 2;
 
-$t0 = [gettimeofday];
+    my $repo_name = sprintf( '%02d_plugins', $count );
 
-rmtree('2_plugins');
-`git clone file://$cwd/repos/subtree/2_plugins`;
+    for ( 1 .. $runs ) {
+        rmtree($repo_name);
 
-$elapsed = tv_interval($t0);
-
-printf "%.03f\n", $elapsed;
+        my $t0 = [gettimeofday];
+        if ( $type eq 'submodule' ) {
+            `git clone --recursive $base/$type/$repo_name`;
+        }
+        else {
+            `git clone $base/$type/$repo_name`;
+        }
+        my $elapsed = tv_interval($t0);
+        printf "%s,%d,%.03f\n", $type, $count, $elapsed;
+    }
+}

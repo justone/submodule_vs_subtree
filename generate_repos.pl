@@ -8,16 +8,16 @@ use File::Path;
 use Cwd;
 
 my @plugins = (
-    'https://github.com/tpope/vim-fugitive.git',
-    'https://github.com/tpope/vim-abolish.git',
-    'https://github.com/vim-scripts/bufexplorer.zip.git',
-    'https://github.com/vim-scripts/The-NERD-Commenter.git',
-    'https://github.com/vim-scripts/The-NERD-tree.git',
-    'https://github.com/vim-scripts/gnupg.git',
-    'https://github.com/spiiph/vim-space.git',
-    'https://github.com/vim-scripts/sessionman.vim.git',
-    'https://github.com/vim-scripts/snipMate.git',
-    'https://github.com/vim-scripts/surround.vim.git',
+    'git://github.com/tpope/vim-fugitive.git',
+    'git://github.com/tpope/vim-abolish.git',
+    'git://github.com/vim-scripts/bufexplorer.zip.git',
+    'git://github.com/vim-scripts/The-NERD-Commenter.git',
+    'git://github.com/vim-scripts/The-NERD-tree.git',
+    'git://github.com/vim-scripts/gnupg.git',
+    'git://github.com/spiiph/vim-space.git',
+    'git://github.com/vim-scripts/sessionman.vim.git',
+    'git://github.com/vim-scripts/snipMate.git',
+    'git://github.com/vim-scripts/surround.vim.git',
 );
 
 rmtree('repos');
