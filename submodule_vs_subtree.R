@@ -9,9 +9,8 @@ smst <- read.csv('data.csv')
 smst$count <- factor(smst$count)
 
 # calculate the mean for each type/count group
-# this line is a bit funky
-smst_mean <- melt(cast(smst, type ~ count, mean), id=c("type"))
+smst_mean <- aggregate(list(time=smst$time), list(type=smst$type, count=smst$count), mean)
 
 png(filename = "submodule_vs_subtree.png", width=700, height=700)
 
-ggplot(smst_mean, aes(x=count, y=value, group=type, color=type)) + geom_line(size = 2) + ylab("time") + xlab("plugin count") + opts(title = "Submodule vs. Subtree checkout times")
+ggplot(smst_mean, aes(x=count, y=time, group=type, color=type)) + geom_line(size = 2) + ylab("time") + xlab("plugin count") + opts(title = "Submodule vs. Subtree checkout times")
