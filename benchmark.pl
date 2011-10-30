@@ -5,20 +5,31 @@ use warnings;
 use Data::Dumper;
 use Time::HiRes qw(gettimeofday tv_interval);
 use File::Path;
+use Getopt::Long;
 use Cwd;
+
+my %options;
+my $opts_ok = GetOptions( \%options, 'remote|r=s', 'local|l=s', );
 
 print "type,count,time\n";
 
-my $cwd  = getcwd;
-my $base = "file://$cwd/repos";
+my $cwd = getcwd;
+
+my ( $tag, $base );
+if ( $base = $options{remote} ) {
+    $tag = 'remote';
+}
+elsif ( $base = $options{local} ) {
+    $tag = 'local';
+}
 
 foreach my $count ( 2, 4, 6, 8, 10 ) {
-    clone_test( 'submodule', $count, 10 );
-    clone_test( 'subtree',   $count, 10 );
+    clone_test( $tag, 'submodule', $count, 10 );
+    clone_test( $tag, 'subtree',   $count, 10 );
 }
 
 sub clone_test {
-    my ( $type, $count, $runs ) = @_;
+    my ( $tag, $type, $count, $runs ) = @_;
 
     $runs ||= 2;
 
@@ -35,6 +46,6 @@ sub clone_test {
             `git clone $base/$type/$repo_name`;
         }
         my $elapsed = tv_interval($t0);
-        printf "%s,%d,%.03f\n", $type, $count, $elapsed;
+        printf "%s.%s,%d,%.03f\n", $type, $tag, $count, $elapsed;
     }
 }
