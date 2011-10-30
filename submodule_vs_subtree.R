@@ -14,6 +14,6 @@ smst$count <- factor(smst$count)
 # calculate the mean for each type/count group
 smst_mean <- aggregate(list(time=smst$time), list(type=smst$type, count=smst$count), mean)
 
-png(filename = "submodule_vs_subtree.png", width=700, height=700)
+png(filename = "submodule_vs_subtree.png", width=500, height=500)
 
 ggplot(smst_mean, aes(x=count, y=time, group=type, color=type)) + geom_line(size = 2) + ylab("time") + xlab("plugin count") + opts(title = "Submodule vs. Subtree checkout times")
