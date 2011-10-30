@@ -5,6 +5,9 @@ library(ggplot2) # load up the ggplot2 library
 # load up the data from the google csv export
 smst <- read.csv('data.csv')
 
+# add names to the data
+names(smst) <- c('type', 'count', 'time')
+
 # force count to be a factor instead of a continuous variable
 smst$count <- factor(smst$count)
 

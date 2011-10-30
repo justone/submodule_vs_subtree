@@ -11,8 +11,6 @@ use Cwd;
 my %options;
 my $opts_ok = GetOptions( \%options, 'remote|r=s', 'local|l=s', );
 
-print "type,count,time\n";
-
 my $cwd = getcwd;
 
 my ( $tag, $base );
